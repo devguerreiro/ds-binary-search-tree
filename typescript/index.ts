@@ -61,6 +61,29 @@ class BinarySearchTree {
         }
         return height;
     }
+
+    search(
+        value: number,
+        node: Node | null = null
+    ): BinarySearchTree | undefined {
+        let _node = node === null ? this.root : node;
+        if (_node.value === value) {
+            return new BinarySearchTree(_node);
+        }
+        if (_node.value > value) {
+            if (_node.left === null) {
+                throw new Error();
+            }
+            // go to the left
+            return this.search(value, _node.left);
+        } else if (_node.value < value) {
+            if (_node.right === null) {
+                throw new Error();
+            }
+            // go to the right
+            return this.search(value, _node.right);
+        }
+    }
 }
 
 const binarySearchTree = new BinarySearchTree(50);
@@ -100,5 +123,20 @@ assert.equal(binarySearchTree.getNodeHeight(80), 2);
 
 // inexistent node
 assert.throws(() => binarySearchTree.getNodeHeight(-100), Error);
+
+// search subtree
+assert.equal(binarySearchTree.search(30) instanceof BinarySearchTree, true);
+
+const subBinarySearchTree = binarySearchTree.search(30);
+
+// 0 degree
+assert.equal(subBinarySearchTree?.root.value, 30);
+
+// 1 degree
+assert.equal((subBinarySearchTree?.root.left as Node).value, 20);
+assert.equal((subBinarySearchTree?.root.right as Node).value, 40);
+
+// inexistent node
+assert.throws(() => binarySearchTree.search(-100), Error);
 
 export default {};
