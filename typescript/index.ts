@@ -84,6 +84,20 @@ class BinarySearchTree {
             return this.search(value, _node.right);
         }
     }
+
+    degreeTraversal() {
+        const queue = [this.root];
+        while (queue.length > 0) {
+            const node = queue.shift() as Node;
+            process.stdout.write(node?.value + "->");
+            if (node.left !== null) {
+                queue.push(node.left);
+            }
+            if (node.right !== null) {
+                queue.push(node.right);
+            }
+        }
+    }
 }
 
 const binarySearchTree = new BinarySearchTree(50);
@@ -138,5 +152,8 @@ assert.equal((subBinarySearchTree?.root.right as Node).value, 40);
 
 // inexistent node
 assert.throws(() => binarySearchTree.search(-100), Error);
+
+// degree traversal
+binarySearchTree.degreeTraversal();
 
 export default {};
