@@ -98,6 +98,24 @@ class BinarySearchTree {
             }
         }
     }
+
+    max(node: Node | null = null) {
+        const _node = node === null ? this.root : node;
+        let max = _node.value;
+        if (_node.right !== null) {
+            max = this.max(_node.right);
+        }
+        return max;
+    }
+
+    min(node: Node | null = null) {
+        const _node = node === null ? this.root : node;
+        let min = _node.value;
+        if (_node.left !== null) {
+            min = this.min(_node.left);
+        }
+        return min;
+    }
 }
 
 const binarySearchTree = new BinarySearchTree(50);
@@ -155,5 +173,11 @@ assert.throws(() => binarySearchTree.search(-100), Error);
 
 // degree traversal
 binarySearchTree.degreeTraversal();
+
+// max value in the tree
+assert.equal(binarySearchTree.max(), 80);
+
+// min value in the tree
+assert.equal(binarySearchTree.min(), 20);
 
 export default {};
