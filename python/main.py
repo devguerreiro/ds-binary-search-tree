@@ -23,50 +23,53 @@ class BinarySearchTree:
             self.root = Node(value)
 
     def insert(self, value: int, node: Node | None = None):
-        node = self.root if node is None else node
-        if node.value > value:
-            if node.left is None:
-                node.left = Node(value)
+        _node = self.root if node is None else node
+        if _node.value > value:
+            if _node.left is None:
+                _node.left = Node(value)
             else:
                 # go to the left
-                self.insert(value, node.left)
-        elif node.value < value:
-            if node.right is None:
-                node.right = Node(value)
+                self.insert(value, _node.left)
+        elif _node.value < value:
+            if _node.right is None:
+                _node.right = Node(value)
             else:
                 # go to the right
-                self.insert(value, node.right)
+                self.insert(value, _node.right)
         return
 
     def get_node_height(self, value: int, node: Node | None = None):
-        node = self.root if node is None else node
-        if node.value == value:
+        _node = self.root if node is None else node
+        if _node.value == value:
             return 0
-        elif node.value > value:
-            if node.left is None:
+        elif _node.value > value:
+            if _node.left is None:
                 raise ValueError()
             # go to the left
-            height = self.get_node_height(value, node.left) + 1
-        elif node.value < value:
-            if node.right is None:
+            height = self.get_node_height(value, _node.left) + 1
+        elif _node.value < value:
+            if _node.right is None:
                 raise ValueError()
             # go to the right
-            height = self.get_node_height(value, node.right) + 1
+            height = self.get_node_height(value, _node.right) + 1
         return height
 
     def search(self, value: int, node: Node | None = None):
-        node = self.root if node is None else node
-        if node.value == value:
-            return BinarySearchTree(node=node)
-        elif node.value > value:
-            if node.left is None:
+        _node = self.root if node is None else node
+        if _node.value == value:
+            return BinarySearchTree(node=_node)
+        elif _node.value > value:
+            if _node.left is None:
                 raise ValueError()
             # go to the left
-            return self.search(value, node.left)
-        if node.right is None:
+            return self.search(value, _node.left)
+        if _node.right is None:
             raise ValueError()
         # go to the right
-        return self.search(value, node.right)
+        return self.search(value, _node.right)
+
+    def height_traversal(self, node: Node | None = None):
+        pass
 
 
 if __name__ == "__main__":
