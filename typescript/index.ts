@@ -39,9 +39,29 @@ class BinarySearchTree {
             }
         }
     }
-}
 
-export default {};
+    getNodeHeight(value: number, node: Node | null = null) {
+        let height = 0;
+        let _node = node === null ? this.root : node;
+        if (_node.value === value) {
+            height = 0;
+        }
+        if (_node.value > value) {
+            if (_node.left === null) {
+                throw new Error();
+            }
+            // go to the left
+            height = this.getNodeHeight(value, _node.left) + 1;
+        } else if (_node.value < value) {
+            if (_node.right === null) {
+                throw new Error();
+            }
+            // go to the right
+            height = this.getNodeHeight(value, _node.right) + 1;
+        }
+        return height;
+    }
+}
 
 const binarySearchTree = new BinarySearchTree(50);
 
@@ -64,3 +84,21 @@ assert.equal((binarySearchTree.root.left?.right as Node).value, 40);
 assert.equal((binarySearchTree.root.left?.left as Node).value, 20);
 assert.equal((binarySearchTree.root.right?.left as Node).value, 60);
 assert.equal((binarySearchTree.root.right?.right as Node).value, 80);
+
+// 0 degree
+assert.equal(binarySearchTree.getNodeHeight(50), 0);
+
+// 1 degree
+assert.equal(binarySearchTree.getNodeHeight(30), 1);
+assert.equal(binarySearchTree.getNodeHeight(30), 1);
+
+// 2 degree
+assert.equal(binarySearchTree.getNodeHeight(40), 2);
+assert.equal(binarySearchTree.getNodeHeight(60), 2);
+assert.equal(binarySearchTree.getNodeHeight(20), 2);
+assert.equal(binarySearchTree.getNodeHeight(80), 2);
+
+// inexistent node
+assert.throws(() => binarySearchTree.getNodeHeight(-100), Error);
+
+export default {};
