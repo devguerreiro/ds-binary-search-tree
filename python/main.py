@@ -40,9 +40,13 @@ class BinarySearchTree:
         if node.value == value:
             return 0
         elif node.value > value:
+            if node.left is None:
+                raise ValueError()
             # go to the left
             height = self.search(value, node.left) + 1
         elif node.value < value:
+            if node.right is None:
+                raise ValueError()
             # go to the right
             height = self.search(value, node.right) + 1
         return height
@@ -83,3 +87,10 @@ if __name__ == "__main__":
     assert binary_search_tree.search(60) == 2
     assert binary_search_tree.search(20) == 2
     assert binary_search_tree.search(80) == 2
+
+    # inexistent value
+    try:
+        binary_search_tree.search(-100)
+        raise AssertionError()
+    except Exception as e:
+        assert isinstance(e, ValueError)
