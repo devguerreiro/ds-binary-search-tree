@@ -78,6 +78,20 @@ class BinarySearchTree:
             if node.right is not None:
                 queue.append(node.right)
 
+    def max(self, node: Node | None = None):
+        _node = self.root if node is None else node
+        _max = _node.value
+        if _node.right is not None:
+            _max = self.max(_node.right)
+        return _max
+
+    def min(self, node: Node | None = None):
+        _node = self.root if node is None else node
+        _min = _node.value
+        if _node.left is not None:
+            _min = self.min(_node.left)
+        return _min
+
 
 if __name__ == "__main__":
     binary_search_tree = BinarySearchTree(50)
@@ -143,3 +157,9 @@ if __name__ == "__main__":
 
     # degree traversal
     binary_search_tree.degree_traversal()
+
+    # max value in the three
+    assert binary_search_tree.max() == 80
+
+    # min value in the three
+    assert binary_search_tree.min() == 20
