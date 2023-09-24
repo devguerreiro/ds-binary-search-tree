@@ -112,15 +112,17 @@ if __name__ == "__main__":
     except Exception as e:
         assert isinstance(e, ValueError)
 
-    # subtree
-    binary_search_tree2 = binary_search_tree.search(30)
+    # search subtree
+    assert isinstance(binary_search_tree.search(30), BinarySearchTree)
+
+    sub_binary_search_tree = binary_search_tree.search(30)
 
     # 0 degree
-    assert binary_search_tree2.root.value == 30
+    assert sub_binary_search_tree.root.value == 30
 
     # 1 degree
-    assert binary_search_tree2.root.left.value == 20
-    assert binary_search_tree2.root.right.value == 40
+    assert sub_binary_search_tree.root.left.value == 20
+    assert sub_binary_search_tree.root.right.value == 40
 
     # inexistent node
     try:
