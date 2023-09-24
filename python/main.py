@@ -68,8 +68,15 @@ class BinarySearchTree:
         # go to the right
         return self.search(value, _node.right)
 
-    def height_traversal(self, node: Node | None = None):
-        pass
+    def degree_traversal(self):
+        queue = [self.root]
+        while len(queue) > 0:
+            node = queue.pop(0)
+            print(node.value, end="->")
+            if node.left is not None:
+                queue.append(node.left)
+            if node.right is not None:
+                queue.append(node.right)
 
 
 if __name__ == "__main__":
@@ -133,3 +140,6 @@ if __name__ == "__main__":
         raise AssertionError()
     except Exception as e:
         assert isinstance(e, ValueError)
+
+    # degree traversal
+    binary_search_tree.degree_traversal()
