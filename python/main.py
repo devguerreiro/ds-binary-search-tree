@@ -16,8 +16,11 @@ class Node:
 class BinarySearchTree:
     root: Node
 
-    def __init__(self, value: int):
-        self.root = Node(value)
+    def __init__(self, value: int | None = None, node: Node | None = None):
+        if node is not None:
+            self.root = node
+        elif value is not None:
+            self.root = Node(value)
 
     def insert(self, value: int, node: Node | None = None):
         node = self.root if node is None else node
@@ -50,6 +53,20 @@ class BinarySearchTree:
             # go to the right
             height = self.get_node_height(value, node.right) + 1
         return height
+
+    def search(self, value: int, node: Node | None = None):
+        node = self.root if node is None else node
+        if node.value == value:
+            return BinarySearchTree(node=node)
+        elif node.value > value:
+            if node.left is None:
+                raise ValueError()
+            # go to the left
+            return self.search(value, node.left)
+        if node.right is None:
+            raise ValueError()
+        # go to the right
+        return self.search(value, node.right)
 
 
 if __name__ == "__main__":
@@ -91,6 +108,23 @@ if __name__ == "__main__":
     # inexistent node
     try:
         binary_search_tree.get_node_height(-100)
+        raise AssertionError()
+    except Exception as e:
+        assert isinstance(e, ValueError)
+
+    # subtree
+    binary_search_tree2 = binary_search_tree.search(30)
+
+    # 0 degree
+    assert binary_search_tree2.root.value == 30
+
+    # 1 degree
+    assert binary_search_tree2.root.left.value == 20
+    assert binary_search_tree2.root.right.value == 40
+
+    # inexistent node
+    try:
+        binary_search_tree.search(-100)
         raise AssertionError()
     except Exception as e:
         assert isinstance(e, ValueError)
