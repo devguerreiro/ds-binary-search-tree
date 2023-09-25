@@ -117,7 +117,7 @@ class BinarySearchTree:
         # second case, where node hasn't right
         elif _node.right is None:
             return _node.left
-        #  third case, where node has both left and right
+        # third case, where node has both left and right
         else:
             successor = self.min(_node.right)
             _node.value = successor
@@ -226,3 +226,11 @@ if __name__ == "__main__":
     assert bst.root.value == 10
     assert bst.root.left.value == 3
     assert bst.root.right.value == 14
+
+    # remove inexistent node
+    bst = make_bst()
+    try:
+        bst.remove(-100)
+        raise AssertionError
+    except Exception as e:
+        assert isinstance(e, ValueError)
